@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: notification.orchestrator
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: noti_user
+    password: SomeP4ssw0rd!
+    virtual-host: /notification
+    listener:
+      simple:
+        prefetch: 50
+
+  datasource:
+    url: jdbc:postgresql://localhost:5444/notification?currentSchema=orchestrator
+    username: sdsdsd
+    password: password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate.default_schema: orchestrator
+      hibernate.format_sql: true
+  sql:
+    init:
+      mode: never
+
+rabbitmq:
+  exchanges:
+    notification: notification.events
+    delivery: delivery.events
+  queues:
+    notification-requested: orchestrator.notification-requested
